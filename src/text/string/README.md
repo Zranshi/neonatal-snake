@@ -51,7 +51,7 @@ print(list(string.printable))
 
 ### 基础使用
 
-Formatter 是 string.py 包中定义的一个类, 其中定义了一个用于格式化字符串的方法: format(这是我们主要适用的 API), 这是一个简单的例子:
+Formatter 是 string.py 包中定义的一个类, 其中定义了一个用于格式化字符串的方法: format(这是我们主要使用的 API), 这是一个简单的例子:
 
 ```py
 f = string.Formatter()
@@ -88,3 +88,5 @@ print(f"{morning}, {'Ranshi'}")
 相比起来是不是非常简单, 那我们以后就都用这种形式来书写格式化字符串.
 
 ### 进阶
+
+### 不同语法

@@ -1,6 +1,6 @@
 # string
 
-string 库是一个 Python 标准库, 主要包含[字符常量](#字符常量)和 [Formatter](#formatter), 这里我们主要了解 Formatter.
+string 库是一个 Python 标准库, 主要包含[字符常量](#字符常量)和[Formatter](#formatter), 这里我们主要了解 Formatter.
 
 ## 字符常量
 
@@ -85,8 +85,120 @@ print(f"{morning}, {'Ranshi'}")
 # Good morning, Ranshi
 ```
 
-相比起来是不是非常简单, 那我们以后就都用这种形式来书写格式化字符串.
+相比起来是不是非常简单, 下文中我们就都用这种形式来书写格式化字符串.
 
-### 进阶
+在`{}`中可以使用"格式规格", 用于定义单个值如果格式到字符串中. 如果未指定则默认调用`str()`函数.
 
-### 不同语法
+一般形式如下:
+
+`[[fill]align][sign][#][0][width][grouping_option][.precision][type]`
+
+### 定位
+
+格式化字符串有两种定位方式.
+
+一种是将 format 函数接收的参数当作一个列表, 然后依次显示在每个`{}`中, 而`{}`中也可以携带数字, 表示替换的是列表中的第几个元素.
+
+```py
+print("{0}, {1}, {2}".format("a", "b", "c"))
+
+print("{}, {}, {}".format("a", "b", "c"))
+
+print("{0}, {0}, {1}".format("a", "b"))
+
+print("{1}, {0}, {2}".format("a", "b", "c"))
+
+# output:
+# a, b, c
+# a, b, c
+# a, a, b
+# b, a, c
+```
+
+第二种是将 format 函数接收的字典参数, 然后对应在相应健的位置.
+
+```py
+print("{greet}, {name}".format(greet="goodbye", name="Ranshi"))
+
+# output:
+# goodbye, Ranshi
+```
+
+由于传入的参数是一个解包的列表或字典, 因此也可以将列表或字典解包后作为 format 函数的参数.
+
+```py
+lst = ["a", "b", "c"]
+print("{1}, {0}, {2}".format(*lst))
+
+d = {"greet": "goodbye", "name": "Ranshi"}
+print("{greet}, {name}".format(**d))
+
+# output:
+# b, a, c
+# goodbye, Ranshi
+```
+
+### 格式化参数
+
+#### 转换符
+
+在`{}`中, 可以设置转换符, 设置后表达式结果会先转换, 再格式化. 转换符一共有 `s | r | a` 三种, 分别表示调用`str()`, `repr()`, `ascii()`. 在转换符前使用 `!`表示需要转换.
+
+```py
+greet = "你好,\tRanshi"
+
+print(f"{greet}")
+print(f"{greet!s}")
+print(f"{greet!r}")
+print(f"{greet!a}")
+
+# output:
+# 你好,   Ranshi
+# 你好,   Ranshi
+# '你好,\tRanshi'
+# '\u4f60\u597d,\tRanshi'
+```
+
+由此可见, 默认是调用`str()`方法.
+
+#### `=` 格式化
+
+在 Python 3.8 版本中, 可以使用 `=` 来进行格式化. 可以将变量格式化成 `s=str(s)` 的字符串. 并且可以在其中任意位置加入字符串.
+
+```py
+result = 15 * 32
+
+print(f"{result=}!")
+print(f"{  result=}!")
+print(f"{result  =}!")
+
+# output:
+# result=480!
+#   result=480!
+# result  =480!
+```
+
+#### 对齐
+
+[官方文档写的比我详细多了.](https://docs.python.org/zh-cn/3/library/string.html#format-specification-mini-language)
+
+例子:
+
+```py
+x = 158
+
+print(f"#{x:~<10}#")
+print(f"#{x:~<+10}#")
+print(f"#{x:~< 10}#")
+print(f"#{-x:~<+10}#")
+print(f"#{x:~^10}#")
+print(f"#{x:~>10}#")
+
+# output:
+# #158~~~~~~~#
+# #+158~~~~~~#
+# # 158~~~~~~#
+# #-158~~~~~~#
+# #~~~158~~~~#
+# #~~~~~~~158#
+```

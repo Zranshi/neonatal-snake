@@ -1,3 +1,4 @@
+import datetime
 import string
 
 f = string.Formatter()
@@ -62,3 +63,25 @@ print(f"#{x:~< 10}#")
 print(f"#{-x:~<+10}#")
 print(f"#{x:~^10}#")
 print(f"#{x:~>10}#")
+
+
+# base
+
+num = 105
+print(f"{num:b}")
+print(f"{num:c}")
+print(f"{num:d}")
+print(f"{num:o}")
+print(f"{num:x}")
+print(f"{num:n}")
+
+# else
+
+num = 1316513216513216513
+print(f"{num:,}")
+
+d = datetime.datetime.now()
+print(f"{d:%Y-%m-%d %H:%M:%S}")
+
+per = 0.35
+print(f"{per:%}")
